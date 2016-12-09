@@ -202,6 +202,13 @@ static void resp_error(const char *errcode)
   resp_end();
 }
 
+static void resp_error_code(unsigned int errcode)
+{
+  resp_begin(rsp_ERROR);
+  send_uint(tag_ERRCODE, errcode);
+  resp_end();
+}
+
 static void resp_mgmt(const char *errcode)
 {
   resp_begin(rsp_MGMT);
@@ -654,6 +661,7 @@ static void char_read_cb(guint8 status, const guint8 *pdu, guint16 plen,
 
     if (status != 0) {
         resp_error(err_COMM_ERR); // Todo: status
+        //resp_error_code(status);
         return;
     }
 
@@ -979,7 +987,8 @@ static void char_write_req_cb(guint8 status, const guint8 *pdu, guint16 plen,
                             gpointer user_data)
 {
     if (status != 0) {
-        resp_error(err_COMM_ERR); // Todo: status
+        //resp_error(err_COMM_ERR); // Todo: status
+        resp_error_code(status); // Todo: status
         return;
     }
 

@@ -294,9 +294,9 @@ class BluepyHelper:
                 if errcode=='nomgmt':
                     raise BTLEException(BTLEException.MGMT_ERROR, "Management not available (permissions problem?)")
                 else:
-                    if type(errcode == int):
+                    if type(errcode) == int:
                         exception = BTLEException(BTLEException.COMM_ERROR, "Error from Bluetooth stack {0}".format(resp))
-                        exception.statusCode = errcode
+                        exception.code = errcode
                         raise exception
                     raise BTLEException(BTLEException.COMM_ERROR, "Error from Bluetooth stack {0}".format(resp))
             elif respType == 'scan':
